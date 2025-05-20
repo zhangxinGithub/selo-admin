@@ -1,23 +1,35 @@
 import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import MainLayout from "@/component/MainLayout";
+
 console.log("Root route loaded");
 export const Route = createRootRoute({
-	component: () => (
-		<>
-			<div className="p-2 flex gap-2">
-				<Link to="/" className="[&.active]:font-bold">
-					Home
-				</Link>{" "}
-				<Link to="/about" className="[&.active]:font-bold">
-					About
-				</Link>{" "}
-				<Link to="/query" className="[&.active]:font-bold">
-					About
-				</Link>
-			</div>
-			<hr />
-			<Outlet />
-			<TanStackRouterDevtools />
-		</>
-	),
+	component: () => {
+		// 获取当前路径
+		const pathname = window.location.pathname;
+
+		// 定义不需要菜单的路径列表
+		const noMenuPaths = ["/login", "/404"];
+
+		// 检查当前路径是否应该没有菜单
+		const shouldHaveNoMenu = noMenuPaths.some(
+			(path) => pathname === path || pathname.startsWith(`${path}/`),
+		);
+
+		// 根据路径选择布局
+		return (
+			<>
+				{shouldHaveNoMenu ? (
+					<EmptyLayout>
+						<Outlet />
+					</EmptyLayout>
+				) : (
+					<MainLayout>
+						<Outlet />
+					</MainLayout>
+				)}
+				<TanStackRouterDevtools />
+			</>
+		);
+	},
 });
