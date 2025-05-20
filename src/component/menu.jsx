@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import { Menu, Button } from "antd";
 import {
-	HomeOutlined,
 	AppstoreOutlined,
-	SettingOutlined,
-	UserOutlined,
 	FileOutlined,
+	HomeOutlined,
 	MenuFoldOutlined,
 	MenuUnfoldOutlined,
+	SettingOutlined,
+	UserOutlined,
 } from "@ant-design/icons";
 import { useNavigate, useRouter } from "@tanstack/react-router";
+import { Button, Menu } from "antd";
+import React, { useState } from "react";
 
 // 菜单项配置
 const menuItems = [
