@@ -1,34 +1,34 @@
 {
-  "name": "selo-admin",
-  "version": "1.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "build": "rsbuild build",
-    "dev": "rsbuild dev --open",
-    "preview": "rsbuild preview",
-    "prepare": "husky install",
-    "lint-staged": "biome check --staged --fix",
-    "lint:fix": "biome check --write --unsafe"
-  },
-  "dependencies": {
-    "@tanstack/react-query": "^5.76.1",
-    "@tanstack/react-query-devtools": "^5.76.1",
-    "@tanstack/react-router": "^1.120.5",
-    "axios": "^1.9.0",
-    "dayjs": "^1.11.13",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "zustand": "^5.0.4"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
-    "@rsbuild/core": "^1.3.1",
-    "@rsbuild/plugin-react": "^1.1.1",
-    "@tailwindcss/postcss": "^4.1.7",
-    "@tanstack/react-router-devtools": "^1.120.6",
-    "@tanstack/router-plugin": "^1.120.5",
-    "husky": "^8.0.0",
-    "tailwindcss": "^4.1.7"
-  }
+	"name": "selo-admin",
+	"version": "1.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"build": "rsbuild build",
+		"dev": "rsbuild dev --open",
+		"preview": "rsbuild preview",
+		"prepare": "husky install",
+		"lint-staged": "biome check --staged --fix",
+		"lint:fix": "biome check --write --unsafe"
+	},
+	"dependencies": {
+		"@tanstack/react-query": "^5.76.1",
+		"@tanstack/react-query-devtools": "^5.76.1",
+		"@tanstack/react-router": "^1.120.5",
+		"axios": "^1.9.0",
+		"dayjs": "^1.11.13",
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1",
+		"zustand": "^5.0.4"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.4",
+		"@rsbuild/core": "^1.3.1",
+		"@rsbuild/plugin-react": "^1.1.1",
+		"@tailwindcss/postcss": "^4.1.7",
+		"@tanstack/react-router-devtools": "^1.120.6",
+		"@tanstack/router-plugin": "^1.120.5",
+		"husky": "^8.0.0",
+		"tailwindcss": "^4.1.7"
+	}
 }
