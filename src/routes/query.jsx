@@ -1,11 +1,11 @@
-import React from "react";
-import { createFileRoute } from "@tanstack/react-router";
 import {
 	QueryClient,
 	QueryClientProvider,
 	useQuery,
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { createFileRoute } from "@tanstack/react-router";
+import React from "react";
 
 export const Route = createFileRoute("/query")({
 	component: App,
