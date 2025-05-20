@@ -1,18 +1,18 @@
-import React, { useState } from "react";
+import bgImg from "@/assets/demo.jpg";
+import { LockOutlined, LoginOutlined, UserOutlined } from "@ant-design/icons";
 import { useNavigate } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import {
+	Button,
+	Card,
+	Checkbox,
 	Form,
 	Input,
-	Button,
-	Checkbox,
-	Card,
+	Space,
 	Typography,
 	message,
-	Space,
 } from "antd";
-import { createFileRoute } from "@tanstack/react-router";
-import { UserOutlined, LockOutlined, LoginOutlined } from "@ant-design/icons";
-import bgImg from "@/assets/demo.jpg";
+import React, { useState } from "react";
 
 export const Route = createFileRoute("/login")({
 	component: LoginPage,
