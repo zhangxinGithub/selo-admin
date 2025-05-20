@@ -27,3 +27,14 @@ Preview the production build locally:
 ```bash
 pnpm preview
 ```
+
+开发脚手架:rsbuild
+状态库:Zustand
+路由库:TanStack route
+请求库:Axios
+请求状态库:TanStack Query
+ui库:Ant Design
+样式库:Tailwind CSS
+时间处理:Day.js
+计算库:mathjs
+工具库:lodash
