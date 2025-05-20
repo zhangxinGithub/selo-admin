@@ -8,7 +8,8 @@
     "dev": "rsbuild dev --open",
     "preview": "rsbuild preview",
     "prepare": "husky install",
-    "lint-staged": "lint-staged"
+    "lint-staged": "biome check --staged --fix",
+    "lint:fix": "biome check --write --unsafe"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.76.1",
@@ -27,12 +28,6 @@
     "@tanstack/react-router-devtools": "^1.120.6",
     "@tanstack/router-plugin": "^1.120.5",
     "husky": "^8.0.0",
-    "lint-staged": "^16.0.0",
     "tailwindcss": "^4.1.7"
-  },
-  "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx}": [
-      "biome --fix"
-    ]
   }
 }
