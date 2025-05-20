@@ -38,3 +38,6 @@ ui库:Ant Design
 时间处理:Day.js
 计算库:mathjs
 工具库:lodash
+
+路由预定请参考
+https://tanstack.com/router/latest/docs/framework/react/routing/file-naming-conventions
