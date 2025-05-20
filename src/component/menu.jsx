@@ -9,15 +9,16 @@ import {
 } from "@ant-design/icons";
 import { useNavigate, useRouter } from "@tanstack/react-router";
 import { Button, Menu } from "antd";
-import React, { useState } from "react";
+import React from "react";
+import useMenuStore from "@/store/menuStore";
 
 // 菜单项配置
 const menuItems = [
 	{
-		key: "dashboard",
+		key: "index",
 		icon: <HomeOutlined />,
 		label: "首页",
-		path: "/dashboard",
+		path: "/",
 	},
 	{
 		key: "products",
@@ -79,7 +80,8 @@ const getMenuItems = (items) => {
 const SideMenu = () => {
 	const navigate = useNavigate();
 	const router = useRouter();
-	const [collapsed, setCollapsed] = useState(false);
+	// 使用 Zustand store 替换本地状态
+	const { collapsed, toggleCollapsed } = useMenuStore();
 
 	// 根据当前路径获取初始选中的菜单项
 	const getSelectedKey = () => {
@@ -100,7 +102,7 @@ const SideMenu = () => {
 		return findKey(menuItems) || "dashboard";
 	};
 
-	const [selectedKey, setSelectedKey] = useState(getSelectedKey());
+	const [selectedKey, setSelectedKey] = React.useState(getSelectedKey());
 
 	// 处理菜单项点击事件
 	const handleMenuClick = ({ key }) => {
@@ -124,10 +126,6 @@ const SideMenu = () => {
 		if (path) {
 			navigate({ to: path });
 		}
-	};
-
-	const toggleCollapsed = () => {
-		setCollapsed(!collapsed);
 	};
 
 	return (

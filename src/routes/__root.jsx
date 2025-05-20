@@ -1,5 +1,5 @@
-import MainLayout from "@/component/MainLayout";
-import { Link, Outlet, createRootRoute } from "@tanstack/react-router";
+import MainLayout from "@/component/mainLayout";
+import { Outlet, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
 console.log("Root route loaded");
@@ -20,9 +20,7 @@ export const Route = createRootRoute({
 		return (
 			<>
 				{shouldHaveNoMenu ? (
-					<EmptyLayout>
-						<Outlet />
-					</EmptyLayout>
+					<Outlet />
 				) : (
 					<MainLayout>
 						<Outlet />
