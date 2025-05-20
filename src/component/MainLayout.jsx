@@ -1,6 +1,6 @@
+import useMenuStore from "@/store/menuStore";
 import React from "react";
 import SideMenu from "./menu";
-import useMenuStore from "@/store/menuStore";
 
 const MainLayout = ({ children }) => {
 	// 使用 Zustand store 获取菜单状态

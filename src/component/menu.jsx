@@ -1,3 +1,4 @@
+import useMenuStore from "@/store/menuStore";
 import {
 	AppstoreOutlined,
 	FileOutlined,
@@ -10,7 +11,6 @@ import {
 import { useNavigate, useRouter } from "@tanstack/react-router";
 import { Button, Menu } from "antd";
 import React from "react";
-import useMenuStore from "@/store/menuStore";
 
 // 菜单项配置
 const menuItems = [
