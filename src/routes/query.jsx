@@ -18,7 +18,7 @@ function App() {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<ReactQueryDevtools />
-			<Example></Example>
+			<Example></Example>1
 		</QueryClientProvider>
 	);
 }
