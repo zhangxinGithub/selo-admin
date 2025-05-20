@@ -10,7 +10,7 @@ import {
 } from "@ant-design/icons";
 import { useNavigate, useRouter } from "@tanstack/react-router";
 import { Button, Menu } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 
 // 菜单项配置
 const menuItems = [
@@ -51,10 +51,10 @@ const menuItems = [
 		path: "/about",
 	},
 	{
-		key: "settings",
+		key: "query",
 		icon: <SettingOutlined />,
-		label: "系统设置",
-		path: "/settings",
+		label: "请求插件",
+		path: "/query",
 	},
 ];
 
@@ -102,7 +102,45 @@ const SideMenu = () => {
 		return findKey(menuItems) || "dashboard";
 	};
 
+	// 获取所有父级菜单keys
+	const getParentKeys = () => {
+		const selectedKey = getSelectedKey();
+		const parentKeys = [];
+
+		const findParentKeys = (items, parentKey = null) => {
+			for (const item of items) {
+				if (item.key === selectedKey) {
+					if (parentKey) parentKeys.push(parentKey);
+					return true;
+				}
+				if (item.children) {
+					if (findParentKeys(item.children, item.key) && parentKey) {
+						parentKeys.push(parentKey);
+						return true;
+					}
+				}
+			}
+			return false;
+		};
+
+		findParentKeys(menuItems);
+		return parentKeys;
+	};
+
 	const [selectedKey, setSelectedKey] = React.useState(getSelectedKey());
+	const [openKeys, setOpenKeys] = React.useState(
+		collapsed ? [] : getParentKeys(),
+	);
+
+	// 处理菜单展开/收起
+	const handleOpenChange = (keys) => {
+		setOpenKeys(keys);
+	};
+
+	// 当折叠状态改变时更新打开的菜单
+	useEffect(() => {
+		setOpenKeys(collapsed ? [] : getParentKeys());
+	}, [collapsed]);
 
 	// 处理菜单项点击事件
 	const handleMenuClick = ({ key }) => {
@@ -145,6 +183,8 @@ const SideMenu = () => {
 				<Menu
 					mode="inline"
 					selectedKeys={[selectedKey]}
+					openKeys={openKeys}
+					onOpenChange={handleOpenChange}
 					onClick={handleMenuClick}
 					items={getMenuItems(menuItems)}
 					inlineCollapsed={collapsed}

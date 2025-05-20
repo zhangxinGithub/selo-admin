@@ -6,6 +6,7 @@ import {
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createFileRoute } from "@tanstack/react-router";
 import React from "react";
+import { Skeleton } from "antd";
 
 export const Route = createFileRoute("/query")({
 	component: App,
@@ -36,7 +37,12 @@ function Example() {
 	});
 
 	// 处理请求正在加载中的状态
-	if (isPending) return "Loading...";
+	if (isPending)
+		return (
+			<div>
+				<Skeleton active title={{ width: "50%" }} paragraph={{ rows: 3 }} />
+			</div>
+		);
 
 	// 处理请求出错的状态
 	if (error) return `An error has occurred: ${error.message}`;
