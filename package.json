@@ -24,6 +24,7 @@
     "@tailwindcss/postcss": "^4.1.7",
     "@tanstack/react-router-devtools": "^1.120.6",
     "@tanstack/router-plugin": "^1.120.5",
+    "husky": "^9.1.7",
     "tailwindcss": "^4.1.7"
   }
 }
