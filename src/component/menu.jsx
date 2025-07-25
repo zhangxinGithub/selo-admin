@@ -23,13 +23,13 @@ const menuItems = [
 	{
 		key: "products",
 		icon: <AppstoreOutlined />,
-		label: "产品管理",
+		label: "活动管理",
 		path: "/products",
 		children: [
 			{
 				key: "products-list",
-				label: "产品列表",
-				path: "/products/list",
+				label: "兑换码发放",
+				path: "/products/code/list",
 			},
 			{
 				key: "products-categories",
@@ -45,10 +45,10 @@ const menuItems = [
 		path: "/users",
 	},
 	{
-		key: "about",
+		key: "roles",
 		icon: <FileOutlined />,
-		label: "About",
-		path: "/about",
+		label: "角色列表",
+		path: "/roles",
 	},
 	{
 		key: "query",
@@ -86,9 +86,20 @@ const SideMenu = () => {
 	// 根据当前路径获取初始选中的菜单项
 	const getSelectedKey = () => {
 		const path = router.state.location.pathname;
+
+		// 特殊处理 /products/code/ 开头的路径，使其激活兑换码发放菜单
+		if (path.startsWith("/products/code/")) {
+			return "products-list";
+		}
+
 		const findKey = (items) => {
 			for (const item of items) {
+				// 检查完全匹配
 				if (item.path === path) {
+					return item.key;
+				}
+				// 对于父级菜单，检查是否为路径前缀
+				if (item.path && path.startsWith(item.path) && item.path !== "/") {
 					return item.key;
 				}
 				if (item.children) {
@@ -99,7 +110,7 @@ const SideMenu = () => {
 			return null;
 		};
 
-		return findKey(menuItems) || "dashboard";
+		return findKey(menuItems) || "index";
 	};
 
 	// 获取所有父级菜单keys
@@ -141,6 +152,17 @@ const SideMenu = () => {
 	useEffect(() => {
 		setOpenKeys(collapsed ? [] : getParentKeys());
 	}, [collapsed]);
+
+	// 监听路由变化，更新选中的菜单项和展开状态
+	useEffect(() => {
+		const currentKey = getSelectedKey();
+		setSelectedKey(currentKey);
+
+		// 如果菜单没有折叠，则更新展开的菜单项
+		if (!collapsed) {
+			setOpenKeys(getParentKeys());
+		}
+	}, [router.state.location.pathname, collapsed]);
 
 	// 处理菜单项点击事件
 	const handleMenuClick = ({ key }) => {

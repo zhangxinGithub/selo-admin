@@ -35,7 +35,7 @@ function Example() {
 			return await response.json();
 		},
 	});
-
+	console.log("数据", data);
 	// 处理请求正在加载中的状态
 	if (isPending)
 		return (

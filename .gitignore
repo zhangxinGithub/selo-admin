@@ -12,3 +12,5 @@ dist/
 !.vscode/extensions.json
 .idea
 .husky
+json
+md

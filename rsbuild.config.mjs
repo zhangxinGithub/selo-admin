@@ -17,4 +17,12 @@ export default defineConfig({
 			"@": path.resolve(__dirname, "./src"),
 		},
 	},
+	// dev: {
+	//   proxy: {
+	//     '/api': {
+	//       target: 'https://minapp.seloselo.cn',
+	//       changeOrigin: true,
+	//     },
+	//   },
+	// },
 });

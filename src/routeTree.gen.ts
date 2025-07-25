@@ -13,9 +13,12 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as QueryImport } from './routes/query'
 import { Route as LoginImport } from './routes/login'
-import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 import { Route as UsersIndexImport } from './routes/users/index'
+import { Route as RolesIndexImport } from './routes/roles/index'
+import { Route as RolesRoleInfoImport } from './routes/roles/role-info'
+import { Route as ProductsCodeListImport } from './routes/products/code/list'
+import { Route as ProductsCodeCodeDetailImport } from './routes/products/code/code-detail'
 
 // Create/Update Routes
 
@@ -31,12 +34,6 @@ const LoginRoute = LoginImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AboutRoute = AboutImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRoute,
-} as any)
-
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
@@ -49,6 +46,30 @@ const UsersIndexRoute = UsersIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const RolesIndexRoute = RolesIndexImport.update({
+  id: '/roles/',
+  path: '/roles/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const RolesRoleInfoRoute = RolesRoleInfoImport.update({
+  id: '/roles/role-info',
+  path: '/roles/role-info',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ProductsCodeListRoute = ProductsCodeListImport.update({
+  id: '/products/code/list',
+  path: '/products/code/list',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ProductsCodeCodeDetailRoute = ProductsCodeCodeDetailImport.update({
+  id: '/products/code/code-detail',
+  path: '/products/code/code-detail',
+  getParentRoute: () => rootRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -58,13 +79,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
     '/login': {
@@ -81,11 +95,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof QueryImport
       parentRoute: typeof rootRoute
     }
+    '/roles/role-info': {
+      id: '/roles/role-info'
+      path: '/roles/role-info'
+      fullPath: '/roles/role-info'
+      preLoaderRoute: typeof RolesRoleInfoImport
+      parentRoute: typeof rootRoute
+    }
+    '/roles/': {
+      id: '/roles/'
+      path: '/roles'
+      fullPath: '/roles'
+      preLoaderRoute: typeof RolesIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/users/': {
       id: '/users/'
       path: '/users'
       fullPath: '/users'
       preLoaderRoute: typeof UsersIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/products/code/code-detail': {
+      id: '/products/code/code-detail'
+      path: '/products/code/code-detail'
+      fullPath: '/products/code/code-detail'
+      preLoaderRoute: typeof ProductsCodeCodeDetailImport
+      parentRoute: typeof rootRoute
+    }
+    '/products/code/list': {
+      id: '/products/code/list'
+      path: '/products/code/list'
+      fullPath: '/products/code/list'
+      preLoaderRoute: typeof ProductsCodeListImport
       parentRoute: typeof rootRoute
     }
   }
@@ -95,52 +137,92 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
   '/login': typeof LoginRoute
   '/query': typeof QueryRoute
+  '/roles/role-info': typeof RolesRoleInfoRoute
+  '/roles': typeof RolesIndexRoute
   '/users': typeof UsersIndexRoute
+  '/products/code/code-detail': typeof ProductsCodeCodeDetailRoute
+  '/products/code/list': typeof ProductsCodeListRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
   '/login': typeof LoginRoute
   '/query': typeof QueryRoute
+  '/roles/role-info': typeof RolesRoleInfoRoute
+  '/roles': typeof RolesIndexRoute
   '/users': typeof UsersIndexRoute
+  '/products/code/code-detail': typeof ProductsCodeCodeDetailRoute
+  '/products/code/list': typeof ProductsCodeListRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
   '/login': typeof LoginRoute
   '/query': typeof QueryRoute
+  '/roles/role-info': typeof RolesRoleInfoRoute
+  '/roles/': typeof RolesIndexRoute
   '/users/': typeof UsersIndexRoute
+  '/products/code/code-detail': typeof ProductsCodeCodeDetailRoute
+  '/products/code/list': typeof ProductsCodeListRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/login' | '/query' | '/users'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/query'
+    | '/roles/role-info'
+    | '/roles'
+    | '/users'
+    | '/products/code/code-detail'
+    | '/products/code/list'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/login' | '/query' | '/users'
-  id: '__root__' | '/' | '/about' | '/login' | '/query' | '/users/'
+  to:
+    | '/'
+    | '/login'
+    | '/query'
+    | '/roles/role-info'
+    | '/roles'
+    | '/users'
+    | '/products/code/code-detail'
+    | '/products/code/list'
+  id:
+    | '__root__'
+    | '/'
+    | '/login'
+    | '/query'
+    | '/roles/role-info'
+    | '/roles/'
+    | '/users/'
+    | '/products/code/code-detail'
+    | '/products/code/list'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
   LoginRoute: typeof LoginRoute
   QueryRoute: typeof QueryRoute
+  RolesRoleInfoRoute: typeof RolesRoleInfoRoute
+  RolesIndexRoute: typeof RolesIndexRoute
   UsersIndexRoute: typeof UsersIndexRoute
+  ProductsCodeCodeDetailRoute: typeof ProductsCodeCodeDetailRoute
+  ProductsCodeListRoute: typeof ProductsCodeListRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
   LoginRoute: LoginRoute,
   QueryRoute: QueryRoute,
+  RolesRoleInfoRoute: RolesRoleInfoRoute,
+  RolesIndexRoute: RolesIndexRoute,
   UsersIndexRoute: UsersIndexRoute,
+  ProductsCodeCodeDetailRoute: ProductsCodeCodeDetailRoute,
+  ProductsCodeListRoute: ProductsCodeListRoute,
 }
 
 export const routeTree = rootRoute
@@ -154,17 +236,17 @@ export const routeTree = rootRoute
       "filePath": "__root.jsx",
       "children": [
         "/",
-        "/about",
         "/login",
         "/query",
-        "/users/"
+        "/roles/role-info",
+        "/roles/",
+        "/users/",
+        "/products/code/code-detail",
+        "/products/code/list"
       ]
     },
     "/": {
       "filePath": "index.jsx"
-    },
-    "/about": {
-      "filePath": "about.jsx"
     },
     "/login": {
       "filePath": "login.jsx"
@@ -172,8 +254,20 @@ export const routeTree = rootRoute
     "/query": {
       "filePath": "query.jsx"
     },
+    "/roles/role-info": {
+      "filePath": "roles/role-info.jsx"
+    },
+    "/roles/": {
+      "filePath": "roles/index.jsx"
+    },
     "/users/": {
       "filePath": "users/index.jsx"
+    },
+    "/products/code/code-detail": {
+      "filePath": "products/code/code-detail.jsx"
+    },
+    "/products/code/list": {
+      "filePath": "products/code/list.jsx"
     }
   }
 }
