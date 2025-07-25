@@ -17,6 +17,7 @@ import { Route as IndexImport } from './routes/index'
 import { Route as UsersIndexImport } from './routes/users/index'
 import { Route as RolesIndexImport } from './routes/roles/index'
 import { Route as RolesRoleInfoImport } from './routes/roles/role-info'
+import { Route as RolesCreateRoleImport } from './routes/roles/create-role'
 import { Route as ProductsCodeListImport } from './routes/products/code/list'
 import { Route as ProductsCodeCodeDetailImport } from './routes/products/code/code-detail'
 
@@ -58,6 +59,12 @@ const RolesRoleInfoRoute = RolesRoleInfoImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const RolesCreateRoleRoute = RolesCreateRoleImport.update({
+  id: '/roles/create-role',
+  path: '/roles/create-role',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const ProductsCodeListRoute = ProductsCodeListImport.update({
   id: '/products/code/list',
   path: '/products/code/list',
@@ -93,6 +100,13 @@ declare module '@tanstack/react-router' {
       path: '/query'
       fullPath: '/query'
       preLoaderRoute: typeof QueryImport
+      parentRoute: typeof rootRoute
+    }
+    '/roles/create-role': {
+      id: '/roles/create-role'
+      path: '/roles/create-role'
+      fullPath: '/roles/create-role'
+      preLoaderRoute: typeof RolesCreateRoleImport
       parentRoute: typeof rootRoute
     }
     '/roles/role-info': {
@@ -139,6 +153,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/query': typeof QueryRoute
+  '/roles/create-role': typeof RolesCreateRoleRoute
   '/roles/role-info': typeof RolesRoleInfoRoute
   '/roles': typeof RolesIndexRoute
   '/users': typeof UsersIndexRoute
@@ -150,6 +165,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/query': typeof QueryRoute
+  '/roles/create-role': typeof RolesCreateRoleRoute
   '/roles/role-info': typeof RolesRoleInfoRoute
   '/roles': typeof RolesIndexRoute
   '/users': typeof UsersIndexRoute
@@ -162,6 +178,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/query': typeof QueryRoute
+  '/roles/create-role': typeof RolesCreateRoleRoute
   '/roles/role-info': typeof RolesRoleInfoRoute
   '/roles/': typeof RolesIndexRoute
   '/users/': typeof UsersIndexRoute
@@ -175,6 +192,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/query'
+    | '/roles/create-role'
     | '/roles/role-info'
     | '/roles'
     | '/users'
@@ -185,6 +203,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/query'
+    | '/roles/create-role'
     | '/roles/role-info'
     | '/roles'
     | '/users'
@@ -195,6 +214,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/query'
+    | '/roles/create-role'
     | '/roles/role-info'
     | '/roles/'
     | '/users/'
@@ -207,6 +227,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginRoute: typeof LoginRoute
   QueryRoute: typeof QueryRoute
+  RolesCreateRoleRoute: typeof RolesCreateRoleRoute
   RolesRoleInfoRoute: typeof RolesRoleInfoRoute
   RolesIndexRoute: typeof RolesIndexRoute
   UsersIndexRoute: typeof UsersIndexRoute
@@ -218,6 +239,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginRoute: LoginRoute,
   QueryRoute: QueryRoute,
+  RolesCreateRoleRoute: RolesCreateRoleRoute,
   RolesRoleInfoRoute: RolesRoleInfoRoute,
   RolesIndexRoute: RolesIndexRoute,
   UsersIndexRoute: UsersIndexRoute,
@@ -238,6 +260,7 @@ export const routeTree = rootRoute
         "/",
         "/login",
         "/query",
+        "/roles/create-role",
         "/roles/role-info",
         "/roles/",
         "/users/",
@@ -253,6 +276,9 @@ export const routeTree = rootRoute
     },
     "/query": {
       "filePath": "query.jsx"
+    },
+    "/roles/create-role": {
+      "filePath": "roles/create-role.jsx"
     },
     "/roles/role-info": {
       "filePath": "roles/role-info.jsx"

@@ -11,12 +11,7 @@ export const Route = createFileRoute("/roles/")({
 });
 
 function RouteComponent() {
-	const {
-		isPending,
-		error,
-		data = { list: [] },
-		isFetching,
-	} = useQuery({
+	const { isPending, error, data, isFetching } = useQuery({
 		queryKey: ["roles", "list"],
 		queryFn: () =>
 			getAllRoleListPage({
@@ -26,6 +21,9 @@ function RouteComponent() {
 				},
 				searchText: searchText,
 			}),
+		initialData: {
+			list: [],
+		},
 	});
 
 	console.log("数据", data);
@@ -119,7 +117,7 @@ function RouteComponent() {
 				dataSource={data.list}
 				rowKey="id"
 				pagination={pagination}
-				loading={isFetching}
+				loading={isPending}
 				onChange={handleTableChange}
 				scroll={{ x: 1000 }}
 			/>

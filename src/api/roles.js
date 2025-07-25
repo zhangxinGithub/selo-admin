@@ -10,5 +10,10 @@ import ajax from "@/ajax/index.js";
  * @returns {Promise<Object>} - 返回角色列表和分页信息
  */
 export const getAllRoleListPage = async (params = {}) => {
-	return await ajax("/app/customRole/allRoleListPage", "POST", params);
+  return await ajax("/app/customRole/allRoleListPage", "POST", params);
 };
+
+export const addRole = async (params = {}) => {
+  return await ajax("/app/customRole/add", "POST", params);
+};
+
