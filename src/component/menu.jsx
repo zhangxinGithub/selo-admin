@@ -1,13 +1,13 @@
 import useMenuStore from "@/store/menuStore";
 import {
 	AppstoreOutlined,
+	DotChartOutlined,
 	FileOutlined,
 	HomeOutlined,
 	MenuFoldOutlined,
 	MenuUnfoldOutlined,
 	SettingOutlined,
 	UserOutlined,
-	DotChartOutlined,
 } from "@ant-design/icons";
 import { useNavigate, useRouter } from "@tanstack/react-router";
 import { Button, Menu } from "antd";

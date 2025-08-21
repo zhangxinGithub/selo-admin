@@ -1,7 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
-import React, { useEffect, useRef } from "react";
-import mapboxgl from "mapbox-gl";
 import podcastData from "@/config/podcast";
+import { createFileRoute } from "@tanstack/react-router";
+import mapboxgl from "mapbox-gl";
+import React, { useEffect, useRef } from "react";
 
 import "mapbox-gl/dist/mapbox-gl.css";
 
