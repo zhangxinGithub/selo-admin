@@ -7,6 +7,7 @@ import {
 	MenuUnfoldOutlined,
 	SettingOutlined,
 	UserOutlined,
+	DotChartOutlined,
 } from "@ant-design/icons";
 import { useNavigate, useRouter } from "@tanstack/react-router";
 import { Button, Menu } from "antd";
@@ -49,6 +50,12 @@ const menuItems = [
 		icon: <FileOutlined />,
 		label: "角色列表",
 		path: "/roles",
+	},
+	{
+		key: "fast",
+		icon: <DotChartOutlined />,
+		label: "fast-graphRAG",
+		path: "/rag",
 	},
 	{
 		key: "query",

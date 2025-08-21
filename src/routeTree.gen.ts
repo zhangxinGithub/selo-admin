@@ -12,10 +12,12 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as QueryImport } from './routes/query'
+import { Route as MapImport } from './routes/map'
 import { Route as LoginImport } from './routes/login'
 import { Route as IndexImport } from './routes/index'
 import { Route as UsersIndexImport } from './routes/users/index'
 import { Route as RolesIndexImport } from './routes/roles/index'
+import { Route as RagIndexImport } from './routes/rag/index'
 import { Route as RolesRoleInfoImport } from './routes/roles/role-info'
 import { Route as RolesCreateRoleImport } from './routes/roles/create-role'
 import { Route as ProductsCodeListImport } from './routes/products/code/list'
@@ -26,6 +28,12 @@ import { Route as ProductsCodeCodeDetailImport } from './routes/products/code/co
 const QueryRoute = QueryImport.update({
   id: '/query',
   path: '/query',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const MapRoute = MapImport.update({
+  id: '/map',
+  path: '/map',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -50,6 +58,12 @@ const UsersIndexRoute = UsersIndexImport.update({
 const RolesIndexRoute = RolesIndexImport.update({
   id: '/roles/',
   path: '/roles/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const RagIndexRoute = RagIndexImport.update({
+  id: '/rag/',
+  path: '/rag/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -95,6 +109,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
+    '/map': {
+      id: '/map'
+      path: '/map'
+      fullPath: '/map'
+      preLoaderRoute: typeof MapImport
+      parentRoute: typeof rootRoute
+    }
     '/query': {
       id: '/query'
       path: '/query'
@@ -114,6 +135,13 @@ declare module '@tanstack/react-router' {
       path: '/roles/role-info'
       fullPath: '/roles/role-info'
       preLoaderRoute: typeof RolesRoleInfoImport
+      parentRoute: typeof rootRoute
+    }
+    '/rag/': {
+      id: '/rag/'
+      path: '/rag'
+      fullPath: '/rag'
+      preLoaderRoute: typeof RagIndexImport
       parentRoute: typeof rootRoute
     }
     '/roles/': {
@@ -152,9 +180,11 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/map': typeof MapRoute
   '/query': typeof QueryRoute
   '/roles/create-role': typeof RolesCreateRoleRoute
   '/roles/role-info': typeof RolesRoleInfoRoute
+  '/rag': typeof RagIndexRoute
   '/roles': typeof RolesIndexRoute
   '/users': typeof UsersIndexRoute
   '/products/code/code-detail': typeof ProductsCodeCodeDetailRoute
@@ -164,9 +194,11 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/map': typeof MapRoute
   '/query': typeof QueryRoute
   '/roles/create-role': typeof RolesCreateRoleRoute
   '/roles/role-info': typeof RolesRoleInfoRoute
+  '/rag': typeof RagIndexRoute
   '/roles': typeof RolesIndexRoute
   '/users': typeof UsersIndexRoute
   '/products/code/code-detail': typeof ProductsCodeCodeDetailRoute
@@ -177,9 +209,11 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/map': typeof MapRoute
   '/query': typeof QueryRoute
   '/roles/create-role': typeof RolesCreateRoleRoute
   '/roles/role-info': typeof RolesRoleInfoRoute
+  '/rag/': typeof RagIndexRoute
   '/roles/': typeof RolesIndexRoute
   '/users/': typeof UsersIndexRoute
   '/products/code/code-detail': typeof ProductsCodeCodeDetailRoute
@@ -191,9 +225,11 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/login'
+    | '/map'
     | '/query'
     | '/roles/create-role'
     | '/roles/role-info'
+    | '/rag'
     | '/roles'
     | '/users'
     | '/products/code/code-detail'
@@ -202,9 +238,11 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/login'
+    | '/map'
     | '/query'
     | '/roles/create-role'
     | '/roles/role-info'
+    | '/rag'
     | '/roles'
     | '/users'
     | '/products/code/code-detail'
@@ -213,9 +251,11 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/login'
+    | '/map'
     | '/query'
     | '/roles/create-role'
     | '/roles/role-info'
+    | '/rag/'
     | '/roles/'
     | '/users/'
     | '/products/code/code-detail'
@@ -226,9 +266,11 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginRoute: typeof LoginRoute
+  MapRoute: typeof MapRoute
   QueryRoute: typeof QueryRoute
   RolesCreateRoleRoute: typeof RolesCreateRoleRoute
   RolesRoleInfoRoute: typeof RolesRoleInfoRoute
+  RagIndexRoute: typeof RagIndexRoute
   RolesIndexRoute: typeof RolesIndexRoute
   UsersIndexRoute: typeof UsersIndexRoute
   ProductsCodeCodeDetailRoute: typeof ProductsCodeCodeDetailRoute
@@ -238,9 +280,11 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginRoute: LoginRoute,
+  MapRoute: MapRoute,
   QueryRoute: QueryRoute,
   RolesCreateRoleRoute: RolesCreateRoleRoute,
   RolesRoleInfoRoute: RolesRoleInfoRoute,
+  RagIndexRoute: RagIndexRoute,
   RolesIndexRoute: RolesIndexRoute,
   UsersIndexRoute: UsersIndexRoute,
   ProductsCodeCodeDetailRoute: ProductsCodeCodeDetailRoute,
@@ -259,9 +303,11 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/login",
+        "/map",
         "/query",
         "/roles/create-role",
         "/roles/role-info",
+        "/rag/",
         "/roles/",
         "/users/",
         "/products/code/code-detail",
@@ -274,6 +320,9 @@ export const routeTree = rootRoute
     "/login": {
       "filePath": "login.jsx"
     },
+    "/map": {
+      "filePath": "map.jsx"
+    },
     "/query": {
       "filePath": "query.jsx"
     },
@@ -282,6 +331,9 @@ export const routeTree = rootRoute
     },
     "/roles/role-info": {
       "filePath": "roles/role-info.jsx"
+    },
+    "/rag/": {
+      "filePath": "rag/index.jsx"
     },
     "/roles/": {
       "filePath": "roles/index.jsx"

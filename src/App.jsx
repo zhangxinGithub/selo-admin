@@ -18,7 +18,11 @@ const App = () => {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<ReactQueryDevtools />
-			<RouterProvider router={router} />
+			<RouterProvider
+				//添加baseurl
+				basepath="/yiche/"
+				router={router}
+			/>
 		</QueryClientProvider>
 	);
 };
