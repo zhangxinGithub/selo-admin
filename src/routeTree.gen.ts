@@ -12,6 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as QueryImport } from './routes/query'
+import { Route as Map2dImport } from './routes/map2d'
 import { Route as MapImport } from './routes/map'
 import { Route as LoginImport } from './routes/login'
 import { Route as IndexImport } from './routes/index'
@@ -28,6 +29,12 @@ import { Route as ProductsCodeCodeDetailImport } from './routes/products/code/co
 const QueryRoute = QueryImport.update({
   id: '/query',
   path: '/query',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const Map2dRoute = Map2dImport.update({
+  id: '/map2d',
+  path: '/map2d',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -116,6 +123,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MapImport
       parentRoute: typeof rootRoute
     }
+    '/map2d': {
+      id: '/map2d'
+      path: '/map2d'
+      fullPath: '/map2d'
+      preLoaderRoute: typeof Map2dImport
+      parentRoute: typeof rootRoute
+    }
     '/query': {
       id: '/query'
       path: '/query'
@@ -181,6 +195,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/map': typeof MapRoute
+  '/map2d': typeof Map2dRoute
   '/query': typeof QueryRoute
   '/roles/create-role': typeof RolesCreateRoleRoute
   '/roles/role-info': typeof RolesRoleInfoRoute
@@ -195,6 +210,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/map': typeof MapRoute
+  '/map2d': typeof Map2dRoute
   '/query': typeof QueryRoute
   '/roles/create-role': typeof RolesCreateRoleRoute
   '/roles/role-info': typeof RolesRoleInfoRoute
@@ -210,6 +226,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/map': typeof MapRoute
+  '/map2d': typeof Map2dRoute
   '/query': typeof QueryRoute
   '/roles/create-role': typeof RolesCreateRoleRoute
   '/roles/role-info': typeof RolesRoleInfoRoute
@@ -226,6 +243,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/map'
+    | '/map2d'
     | '/query'
     | '/roles/create-role'
     | '/roles/role-info'
@@ -239,6 +257,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/map'
+    | '/map2d'
     | '/query'
     | '/roles/create-role'
     | '/roles/role-info'
@@ -252,6 +271,7 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/map'
+    | '/map2d'
     | '/query'
     | '/roles/create-role'
     | '/roles/role-info'
@@ -267,6 +287,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginRoute: typeof LoginRoute
   MapRoute: typeof MapRoute
+  Map2dRoute: typeof Map2dRoute
   QueryRoute: typeof QueryRoute
   RolesCreateRoleRoute: typeof RolesCreateRoleRoute
   RolesRoleInfoRoute: typeof RolesRoleInfoRoute
@@ -281,6 +302,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginRoute: LoginRoute,
   MapRoute: MapRoute,
+  Map2dRoute: Map2dRoute,
   QueryRoute: QueryRoute,
   RolesCreateRoleRoute: RolesCreateRoleRoute,
   RolesRoleInfoRoute: RolesRoleInfoRoute,
@@ -304,6 +326,7 @@ export const routeTree = rootRoute
         "/",
         "/login",
         "/map",
+        "/map2d",
         "/query",
         "/roles/create-role",
         "/roles/role-info",
@@ -322,6 +345,9 @@ export const routeTree = rootRoute
     },
     "/map": {
       "filePath": "map.jsx"
+    },
+    "/map2d": {
+      "filePath": "map2d.jsx"
     },
     "/query": {
       "filePath": "query.jsx"

@@ -1,7 +1,7 @@
 import podcastData from "@/config/podcast";
 import { createFileRoute } from "@tanstack/react-router";
 import mapboxgl from "mapbox-gl";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import "mapbox-gl/dist/mapbox-gl.css";
 
@@ -12,6 +12,7 @@ export const Route = createFileRoute("/map")({
 function MapPage() {
 	const mapContainerRef = useRef();
 	const mapRef = useRef();
+	const [zoomLevel, setZoomLevel] = useState(2);
 
 	useEffect(() => {
 		// 播客数据
@@ -23,17 +24,17 @@ function MapPage() {
 			container: "map",
 			style: "mapbox://styles/mapbox/dark-v11",
 			center: [0, 0],
-			zoom: 2,
+			zoom: zoomLevel,
 			projection: "globe",
 		});
 
 		mapRef.current.on("load", () => {
 			// 设置雾效果和大气层
 			mapRef.current.setFog({
-				color: "rgb(10, 15, 25)",
-				"high-color": "rgb(30, 35, 45)",
-				"horizon-blend": 0.02,
-				"space-color": "rgb(5, 10, 20)",
+				color: "rgb(5, 10, 35)",
+				"high-color": "rgb(15, 25, 55)",
+				"horizon-blend": 0.1,
+				"space-color": "rgb(2, 5, 25)",
 				"star-intensity": 0.6,
 			});
 
@@ -123,6 +124,9 @@ function MapPage() {
 				setUserInteracting(false);
 			});
 
+			//禁止拖拽
+			mapRef.current.dragPan.disable();
+
 			// 添加播客数据源
 			mapRef.current.addSource("podcasts", {
 				type: "geojson",
@@ -132,9 +136,9 @@ function MapPage() {
 						type: "Feature",
 						properties: {
 							id: podcast.id,
-							name: podcast.podcast_name,
-							title: podcast.episode_title,
-							date: podcast.episode_posted_at,
+							name: "New Hope",
+							title: "张鑫",
+							date: "2025-03-01",
 							podcast_image: podcast.podcast_image,
 						},
 						geometry: {
@@ -309,6 +313,11 @@ function MapPage() {
 					],
 				});
 			});
+
+			// 监听地图zoom变化，同步更新滑块
+			mapRef.current.on("zoom", () => {
+				setZoomLevel(mapRef.current.getZoom());
+			});
 		});
 
 		// 清理函数
@@ -319,12 +328,127 @@ function MapPage() {
 		};
 	}, []);
 
+	// 处理滑块值变化
+	const handleZoomChange = (event) => {
+		const newZoom = Number.parseFloat(event.target.value);
+		setZoomLevel(newZoom);
+		if (mapRef.current) {
+			mapRef.current.setZoom(newZoom);
+		}
+	};
+
 	return (
-		<div
-			id="map"
-			ref={mapContainerRef}
-			style={{ width: "100vw", height: "100vh" }}
-		></div>
+		<div style={{ position: "relative", width: "100vw", height: "100vh" }}>
+			<div
+				id="map"
+				ref={mapContainerRef}
+				style={{ width: "100%", height: "100%" }}
+			></div>
+
+			{/* Zoom控制滑块 */}
+			<div
+				style={{
+					position: "absolute",
+					bottom: "30px",
+					left: "50%",
+					transform: "translateX(-50%)",
+					background: "rgba(0, 0, 0, 0.8)",
+					borderRadius: "25px",
+					padding: "15px 25px",
+					border: "1px solid #00D4FF",
+					backdropFilter: "blur(10px)",
+					zIndex: 1000,
+				}}
+			>
+				<div
+					style={{
+						display: "flex",
+						alignItems: "center",
+						gap: "15px",
+						color: "white",
+						fontSize: "14px",
+					}}
+				>
+					<span style={{ color: "#00D4FF", fontWeight: "bold" }}>🌍</span>
+					<input
+						type="range"
+						min="0"
+						max="20"
+						step="0.1"
+						value={zoomLevel}
+						onChange={handleZoomChange}
+						style={{
+							width: "200px",
+							height: "6px",
+							borderRadius: "3px",
+							background: "linear-gradient(to right, #00D4FF 0%, #0099CC 100%)",
+							outline: "none",
+							appearance: "none",
+							WebkitAppearance: "none",
+							cursor: "pointer",
+						}}
+					/>
+					<span
+						style={{ color: "#00D4FF", fontWeight: "bold", minWidth: "35px" }}
+					>
+						{zoomLevel.toFixed(1)}
+					</span>
+				</div>
+			</div>
+
+			{/* 滑块样式 */}
+			<style jsx>{`
+				input[type="range"]::-webkit-slider-thumb {
+					appearance: none;
+					width: 20px;
+					height: 20px;
+					border-radius: 50%;
+					background: #00D4FF;
+					border: 2px solid white;
+					cursor: pointer;
+					box-shadow: 0 2px 6px rgba(0, 212, 255, 0.4);
+					transition: all 0.2s ease;
+				}
+
+				input[type="range"]::-webkit-slider-thumb:hover {
+					transform: scale(1.1);
+					box-shadow: 0 4px 12px rgba(0, 212, 255, 0.6);
+				}
+
+				input[type="range"]::-moz-range-thumb {
+					width: 20px;
+					height: 20px;
+					border-radius: 50%;
+					background: #00D4FF;
+					border: 2px solid white;
+					cursor: pointer;
+					box-shadow: 0 2px 6px rgba(0, 212, 255, 0.4);
+					transition: all 0.2s ease;
+				}
+
+				input[type="range"]::-moz-range-thumb:hover {
+					transform: scale(1.1);
+					box-shadow: 0 4px 12px rgba(0, 212, 255, 0.6);
+				}
+
+				/* 移动端触摸优化 */
+				@media (max-width: 768px) {
+					input[type="range"] {
+						width: 150px !important;
+					}
+					
+					input[type="range"]::-webkit-slider-thumb {
+						width: 24px;
+						height: 24px;
+					}
+					
+					input[type="range"]::-moz-range-thumb {
+						width: 24px;
+						height: 24px;
+					}
+				}
+			`}</style>
+		</div>
 	);
 }
 

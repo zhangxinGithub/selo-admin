@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello Photorealistic 3D Maps in Maps JavaScript</title>
+
+    <style>
+      html,
+      body {
+        height:100%;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+      }
+      
+      .container {
+        display: flex;
+        height: 100%;
+      }
+      
+      .map-container {
+        flex: 1;
+        position: relative;
+      }
+      
+      .sidebar {
+        width: 300px;
+        background: #f5f5f5;
+        border-left: 1px solid #ccc;
+        padding: 20px;
+        box-sizing: border-box;
+        overflow-y: auto;
+      }
+      
+      .sidebar h3 {
+        margin-top: 0;
+        color: #333;
+        font-size: 18px;
+        border-bottom: 2px solid #4285f4;
+        padding-bottom: 10px;
+      }
+      
+      .landmark-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      
+      .landmark-item {
+        background: white;
+        margin-bottom: 10px;
+        padding: 12px;
+        border-radius: 6px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        border-left: 4px solid #4285f4;
+      }
+      
+      .landmark-name {
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 5px;
+      }
+      
+      .landmark-coords {
+        font-size: 12px;
+        color: #666;
+        font-family: monospace;
+      }
+      
+      .no-landmarks {
+        text-align: center;
+        color: #999;
+        font-style: italic;
+        padding: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="map-container">
+        <gmp-map-3d map-id="85de187b79e899489a00a2cb" id="map3d" mode="hybrid" center="0, 0" range="20000000" tilt="5" heading="0">
+          <gmp-marker-3d position="48.861000,2.335861"></gmp-marker-3d>
+          <gmp-marker-3d position="40.712776,-74.005974"></gmp-marker-3d>
+          <gmp-marker-3d position="35.689487,139.691711"></gmp-marker-3d>
+          <gmp-marker-3d position="51.507351,-0.127758"></gmp-marker-3d>
+          <gmp-marker-3d position="-33.868820,151.209295"></gmp-marker-3d>
+          <gmp-marker-3d position="55.755826,37.617300"></gmp-marker-3d>
+          <gmp-marker-3d position="22.396428,114.109497"></gmp-marker-3d>
+          <gmp-marker-3d position="39.904211,116.407395"></gmp-marker-3d>
+          <gmp-marker-3d position="-22.908333,-43.196388"></gmp-marker-3d>
+          <gmp-marker-3d position="19.432608,-99.133209"></gmp-marker-3d>
+          <gmp-marker-3d position="52.520008,13.404954"></gmp-marker-3d>
+          <gmp-marker-3d position="37.774929,-122.419416"></gmp-marker-3d>
+          <gmp-marker-3d position="-34.603684,-58.381559"></gmp-marker-3d>
+          <gmp-marker-3d position="41.385064,2.173404"></gmp-marker-3d>
+          <gmp-marker-3d position="43.653226,-79.383184"></gmp-marker-3d>
+          <gmp-marker-3d position="-26.204103,28.047304"></gmp-marker-3d>
+          <gmp-marker-3d position="45.464204,9.189982"></gmp-marker-3d>
+          <gmp-marker-3d position="1.352083,103.819836"></gmp-marker-3d>
+          <gmp-marker-3d position="59.329323,18.068581"></gmp-marker-3d>
+          <gmp-marker-3d position="25.204849,55.270783"></gmp-marker-3d>
+          <gmp-marker-3d position="30.044420,31.235712"></gmp-marker-3d>
+          <gmp-marker-3d position="13.756331,100.501765"></gmp-marker-3d>
+          <gmp-marker-3d position="-6.208763,106.845599"></gmp-marker-3d>
+          <gmp-marker-3d position="37.566535,126.977969"></gmp-marker-3d>
+          <gmp-marker-3d position="48.208174,16.373819"></gmp-marker-3d>
+          <gmp-marker-3d position="53.349805,-6.260310"></gmp-marker-3d>
+          <gmp-marker-3d position="50.075538,14.437800"></gmp-marker-3d>
+          <gmp-marker-3d position="64.126521,-21.817439"></gmp-marker-3d>
+          <gmp-marker-3d position="-41.286460,174.776236"></gmp-marker-3d>
+          <gmp-marker-3d position="35.011635,135.768029"></gmp-marker-3d>
+        </gmp-map-3d>
+      </div>
+      
+      <div class="sidebar">
+        <h3>可见地标</h3>
+        <ul id="landmark-list" class="landmark-list">
+          <li class="no-landmarks">正在加载...</li>
+        </ul>
+      </div>
+    </div>
+
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAmBvFeUyHGc5KRLcpeTggQyZziRdzlHFc&v=beta&libraries=maps3d,marker&callback=initMap"></script>
+    
+    <script>
+      function initMap() {
+        const map3d = document.getElementById('map3d');
+        const landmarkList = document.getElementById('landmark-list');
+
+        // 地标数据
+        const landmarks = [
+          { name: '巴黎埃菲尔铁塔', coords: [48.861000, 2.335861] },
+          { name: '纽约自由女神像', coords: [40.712776, -74.005974] },
+          { name: '东京塔', coords: [35.689487, 139.691711] },
+          { name: '伦敦大本钟', coords: [51.507351, -0.127758] },
+          { name: '悉尼歌剧院', coords: [-33.868820, 151.209295] },
+          { name: '莫斯科红场', coords: [55.755826, 37.617300] },
+          { name: '香港维多利亚港', coords: [22.396428, 114.109497] },
+          { name: '北京天安门', coords: [39.904211, 116.407395] },
+          { name: '里约热内卢基督像', coords: [-22.908333, -43.196388] },
+          { name: '墨西哥城', coords: [19.432608, -99.133209] },
+          { name: '柏林勃兰登堡门', coords: [52.520008, 13.404954] },
+          { name: '旧金山金门大桥', coords: [37.774929, -122.419416] },
+          { name: '布宜诺斯艾利斯', coords: [-34.603684, -58.381559] },
+          { name: '巴塞罗那圣家堂', coords: [41.385064, 2.173404] },
+          { name: '多伦多CN塔', coords: [43.653226, -79.383184] },
+          { name: '约翰内斯堡', coords: [-26.204103, 28.047304] },
+          { name: '米兰大教堂', coords: [45.464204, 9.189982] },
+          { name: '新加坡鱼尾狮', coords: [1.352083, 103.819836] },
+          { name: '斯德哥尔摩', coords: [59.329323, 18.068581] },
+          { name: '迪拜哈利法塔', coords: [25.204849, 55.270783] },
+          { name: '开罗金字塔', coords: [30.044420, 31.235712] },
+          { name: '曼谷大皇宫', coords: [13.756331, 100.501765] },
+          { name: '雅加达', coords: [-6.208763, 106.845599] },
+          { name: '首尔景福宫', coords: [37.566535, 126.977969] },
+          { name: '维也纳', coords: [48.208174, 16.373819] },
+          { name: '都柏林', coords: [53.349805, -6.260310] },
+          { name: '布拉格城堡', coords: [50.075538, 14.437800] },
+          { name: '雷克雅未克', coords: [64.126521, -21.817439] },
+          { name: '惠灵顿', coords: [-41.286460, 174.776236] },
+          { name: '大阪城', coords: [35.011635, 135.768029] }
+        ];
+
+        // 旋转速度（度/秒）：真·地球是 ~0.004178°/s，肉眼太慢，这里给个可见速度
+        const degPerSec = 5;  // 可改小更平滑
+
+        const lat = 0;        // 固定在赤道
+        let lon = 0;          // 经度会持续递增（东经为正）
+        let last = performance.now();
+        
+        // 控制动画状态
+        let isRotating = true;
+        let animationId = null;
+        let resumeTimer = null;
+        let isMouseDown = false;
+
+        // 计算地理距离
+        function getDistance(lat1, lon1, lat2, lon2) {
+          const R = 6371; // 地球半径（公里）
+          const dLat = (lat2 - lat1) * Math.PI / 180;
+          const dLon = (lon2 - lon1) * Math.PI / 180;
+          const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                    Math.sin(dLon/2) * Math.sin(dLon/2);
+          const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+          return R * c;
+        }
+
+        // 更新可见地标列表
+        function updateVisibleLandmarks() {
+          const centerLat = lat;
+          const centerLon = lon;
+          const range = 20000; // 可见范围（公里）
+          
+          const visibleLandmarks = landmarks.filter(landmark => {
+            const distance = getDistance(centerLat, centerLon, landmark.coords[0], landmark.coords[1]);
+            return distance <= range;
+          });
+
+          // 按距离排序
+          visibleLandmarks.sort((a, b) => {
+            const distA = getDistance(centerLat, centerLon, a.coords[0], a.coords[1]);
+            const distB = getDistance(centerLat, centerLon, b.coords[0], b.coords[1]);
+            return distA - distB;
+          });
+
+          // 更新列表显示
+          if (visibleLandmarks.length === 0) {
+            landmarkList.innerHTML = '<li class="no-landmarks">当前视野内无地标</li>';
+          } else {
+            landmarkList.innerHTML = visibleLandmarks.map(landmark => {
+              const distance = getDistance(centerLat, centerLon, landmark.coords[0], landmark.coords[1]);
+              return `
+                <li class="landmark-item">
+                  <div class="landmark-name">${landmark.name}</div>
+                  <div class="landmark-coords">
+                    坐标: ${landmark.coords[0].toFixed(4)}, ${landmark.coords[1].toFixed(4)}<br>
+                    距离: ${distance.toFixed(0)} 公里
+                  </div>
+                </li>
+              `;
+            }).join('');
+          }
+        }
+
+        function animate(now) {
+          const dt = (now - last) / 1000; // 秒
+          last = now;
+
+          if (isRotating) {
+            lon -= degPerSec * dt;          // 向西转
+            // 归一化到 [-180, 180) 避免数值溢出
+            if (lon <= -180) lon += 360;
+
+            // 更新中心点（保持 heading 不变）
+            map3d.setAttribute('center', `${lat}, ${lon.toFixed(6)}`);
+            
+            // 更新可见地标列表
+            updateVisibleLandmarks();
+          }
+
+          animationId = requestAnimationFrame(animate);
+        }
+
+        function pauseRotation() {
+          isRotating = false;
+          if (resumeTimer) {
+            clearTimeout(resumeTimer);
+            resumeTimer = null;
+          }
+        }
+
+        function scheduleResume() {
+          if (resumeTimer) {
+            clearTimeout(resumeTimer);
+          }
+          resumeTimer = setTimeout(() => {
+            if (!isMouseDown) {
+              isRotating = true;
+              last = performance.now(); // 重置时间避免跳跃
+            }
+          }, 2000); // 2秒后恢复旋转
+        }
+
+        // 鼠标事件监听
+        map3d.addEventListener('mousedown', () => {
+          isMouseDown = true;
+          pauseRotation();
+        });
+
+        map3d.addEventListener('mouseup', () => {
+          isMouseDown = false;
+          scheduleResume();
+        });
+
+        map3d.addEventListener('mousemove', (e) => {
+          if (isMouseDown) {
+            pauseRotation();
+            // 用户拖拽时也更新列表
+            setTimeout(updateVisibleLandmarks, 100);
+          }
+        });
+
+        // 鼠标离开地图区域时也恢复旋转
+        map3d.addEventListener('mouseleave', () => {
+          isMouseDown = false;
+          scheduleResume();
+        });
+
+        // 初始化
+        updateVisibleLandmarks();
+        animationId = requestAnimationFrame(animate);
+      }
+    </script>
+  </body>
+</html>

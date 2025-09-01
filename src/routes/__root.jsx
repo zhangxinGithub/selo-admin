@@ -9,7 +9,14 @@ export const Route = createRootRoute({
 		const pathname = window.location.pathname;
 
 		// 定义不需要菜单的路径列表
-		const noMenuPaths = ["/login", "/404", "/yiche/map"];
+		const noMenuPaths = [
+			"/yiche/login",
+			"/yiche/404",
+			"/yiche/map",
+			"/yiche/google",
+			"/yiche/map2d",
+			"/yiche/map3d",
+		];
 
 		// 检查当前路径是否应该没有菜单
 		const shouldHaveNoMenu = noMenuPaths.some(
