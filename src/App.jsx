@@ -5,9 +5,9 @@ import {
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
+import React, { use, useEffect } from "react";
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
-import React, { use, useEffect } from "react";
 import "./App.css";
 // Create a new router instance
 const router = createRouter({ routeTree });
